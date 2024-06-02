@@ -10,7 +10,7 @@ import createUtil from './target-util';
 export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
   const [canvas, setCanvas] = useState(null);
   const [currentRuntime, setCurrentRuntime] = useState(false);
-  const { maybeLocaleText } = useLocale();
+  const { language, maybeLocaleText } = useLocale();
   const { editor, fileList, assetList, selectedIndex, openFile, modifyFile } = useEditor();
 
   const zoomRatio = stageSize === 'small' ? 1 : 1.5;
@@ -82,6 +82,7 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
       if (!currentRuntime) {
         // start
         const runtime = new Runtime(
+          language,
           onRequestStop,
           assetList.filter((asset) => asset.type === 'audio/wav'),
         );

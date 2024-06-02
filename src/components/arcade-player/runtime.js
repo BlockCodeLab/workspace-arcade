@@ -10,12 +10,17 @@ export default class Runtime extends BaseRuntime {
   static VIEW_HEIGHT = VIEW_HEIGHT;
   static DEFAULT_DIRECTION = DEFAULT_DIRECTION;
 
-  constructor(onRequestStop, soundsList) {
+  constructor(language, onRequestStop, soundsList) {
     super(onRequestStop);
+    this._language = language;
     this._tone = new Tone({ type: 'square' });
     this._soundsList = soundsList;
     this._waveList = new Map();
     this._wifiConnected = false;
+  }
+
+  get language() {
+    return this._language;
   }
 
   when(eventName, listener, raster = null) {
