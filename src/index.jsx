@@ -1,6 +1,7 @@
 import featureImage from './feature.png';
 
 export default {
+  sortIndex: 3,
   image: featureImage,
   name: 'Scratch Arcade',
   description: 'Arcade game edit and play.',
