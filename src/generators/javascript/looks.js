@@ -143,7 +143,7 @@ javascriptGenerator['looks_gotofrontback'] = (block) => {
   if (javascriptGenerator.STATEMENT_PREFIX) {
     code += javascriptGenerator.injectId(javascriptGenerator.STATEMENT_PREFIX, block);
   }
-  const frontOrBackValue = pythonGenerator.quote_(block.getFieldValue('FRONT_BACK'));
+  const frontOrBackValue = javascriptGenerator.quote_(block.getFieldValue('FRONT_BACK'));
   code += `target.util.zIndex = ${frontOrBackValue};\n`;
   return code;
 };
