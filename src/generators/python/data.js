@@ -20,7 +20,7 @@ pythonGenerator['data_setvariableto'] = (block) => {
     TARGET_VARIABLE +
     pythonGenerator.variableDB_.getName(block.getFieldValue('VARIABLE'), ScratchBlocks.Variables.NAME_TYPE);
   const valueCode = pythonGenerator.valueToCode(block, 'VALUE', pythonGenerator.ORDER_NONE) || '""';
-  code += `${varName} = ${valueCode};\n`;
+  code += `${varName} = ${valueCode}\n`;
   return code;
 };
 
@@ -34,7 +34,7 @@ pythonGenerator['data_changevariableby'] = (block) => {
     TARGET_VARIABLE +
     pythonGenerator.variableDB_.getName(block.getFieldValue('VARIABLE'), ScratchBlocks.Variables.NAME_TYPE);
   const valueCode = pythonGenerator.valueToCode(block, 'VALUE', pythonGenerator.ORDER_NONE) || 0;
-  code += `${varName} = num(${varName}) + num(${valueCode});\n`;
+  code += `${varName} = num(${varName}) + num(${valueCode})\n`;
   return code;
 };
 

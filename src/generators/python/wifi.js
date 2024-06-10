@@ -26,5 +26,5 @@ pythonGenerator['wifi_disconnect'] = () => {
 };
 
 pythonGenerator['wifi_isconnected'] = () => {
-  return ['runtime.wifi_connected', pythonGenerator.ORDER_FUNCTION_CALL];
+  return ['runtime.wifi_connected', pythonGenerator.ORDER_MEMBER];
 };
