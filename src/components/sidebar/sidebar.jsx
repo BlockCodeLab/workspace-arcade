@@ -6,7 +6,7 @@ import StageSelector from '../stage-selector/stage-selector';
 
 import styles from './sidebar.module.css';
 
-export default function Sidebar({ onPaint }) {
+export default function Sidebar() {
   const [playing, setPlaying] = useState(false);
   const [stageSize, setStageSize] = useState(window.innerWidth < 1280 ? 'small' : 'large');
 
@@ -26,13 +26,9 @@ export default function Sidebar({ onPaint }) {
         <SpriteSelector
           playing={playing}
           stageSize={stageSize}
-          onPaint={onPaint}
           onStop={handleStop}
         />
-        <StageSelector
-          onPaint={onPaint}
-          onStop={handleStop}
-        />
+        <StageSelector onStop={handleStop} />
       </div>
     </div>
   );

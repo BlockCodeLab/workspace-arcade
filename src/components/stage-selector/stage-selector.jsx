@@ -16,10 +16,10 @@ import fileUploadIcon from '../sprite-selector/icon-file-upload.svg';
 const DEFAULT_BACKDROP_THUMB =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC';
 
-export default function StageSelector({ onStop, onPaint }) {
+export default function StageSelector({ onStop }) {
   const [backdropsLibrary, setBackdropsLibrary] = useState(false);
   const { getText } = useLocale();
-  const { createAlert, removeAlert } = useLayout();
+  const { selectTab, createAlert, removeAlert } = useLayout();
   const { fileList, assetList, selectedIndex, openFile, addAsset, modifyFile } = useEditor();
 
   let backdropIdList, thumb, count;
@@ -122,7 +122,7 @@ export default function StageSelector({ onStop, onPaint }) {
       assets: backdropIdList.concat(imageId),
       frame: count,
     });
-    onPaint();
+    selectTab(1);
   };
 
   const handleSurprise = () => {

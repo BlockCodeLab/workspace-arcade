@@ -15,10 +15,10 @@ import paintIcon from './icon-paint.svg';
 import fileUploadIcon from './icon-file-upload.svg';
 import SpritesLibrary from '../libraries/sprites-library';
 
-export default function SpriteSelector({ playing, stageSize, onStop, onPaint }) {
+export default function SpriteSelector({ playing, stageSize, onStop }) {
   const [spritesLibrary, setSpritesLibrary] = useState(false);
   const { getText } = useLocale();
-  const { createAlert, removeAlert, createPrompt } = useLayout();
+  const { selectTab, createAlert, removeAlert, createPrompt } = useLayout();
   const { fileList, assetList, selectedIndex, addFile, openFile, deleteFile, addAsset, deleteAsset } = useEditor();
 
   const handleShowLibrary = () => {
@@ -132,7 +132,7 @@ export default function SpriteSelector({ playing, stageSize, onStop, onPaint }) 
       direction: 90,
       rotationStyle: RotationStyle.ALL_AROUND,
     });
-    onPaint();
+    selectTab(1);
   };
 
   const handleSurprise = () => {
