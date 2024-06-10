@@ -516,6 +516,7 @@ class SpriteUtil extends Util {
 
   createDialog(text, style = 'say') {
     this.removeDialog();
+    if (!text) return;
 
     let clen = 0;
     let llen = 0;
@@ -768,6 +769,7 @@ class SpriteUtil extends Util {
   }
 
   async say(text, wait = 0) {
+    if (!this.running) return;
     this.createDialog(text);
     if (wait > 0) {
       await sleep(wait * 1000);
@@ -776,6 +778,7 @@ class SpriteUtil extends Util {
   }
 
   async think(text, wait = 0) {
+    if (!this.running) return;
     this.createDialog(text, 'think');
     if (wait > 0) {
       await sleep(wait * 1000);
@@ -816,9 +819,14 @@ class SpriteUtil extends Util {
     if (!target) {
       return !!this.findNearestEdge();
     }
-    if (this.hidden || target.hidden) {
-      return false;
+    if (this.hidden) return false;
+    for (const clone of target.clones) {
+      if (clone.util.hidden) continue;
+      if (touching(this.contour, clone.util.contour)) {
+        return true;
+      }
     }
+    if (target.hidden) return false;
     return touching(this.contour, target.contour);
   }
 
