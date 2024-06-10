@@ -16,7 +16,7 @@ export default class Runtime extends BaseRuntime {
     this._tone = new Tone({ type: 'square' });
     this._soundsList = soundsList;
     this._waveList = new Map();
-    this._wifiConnected = false;
+    this._wifiConnected = true;
   }
 
   get language() {
