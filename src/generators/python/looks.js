@@ -124,7 +124,7 @@ pythonGenerator['looks_switchbackdropto'] = (block) => {
   }
   const backdropCode = pythonGenerator.valueToCode(block, 'BACKDROP', pythonGenerator.ORDER_NONE) || '""';
   code += `stage.frame_name = ${backdropCode}\n`;
-  code += `runtime.fire("BACKDROP_SWITCHES_TO:" + ${backdropCode})\n`;
+  code += `runtime.backdropswitchesto(${backdropCode})\n`;
   return code;
 };
 
@@ -177,6 +177,6 @@ pythonGenerator['looks_switchbackdroptoandwait'] = (block) => {
   }
   const backdropCode = pythonGenerator.valueToCode(block, 'BACKDROP', pythonGenerator.ORDER_NONE) || '""';
   code += `stage.frame_name = ${backdropCode}\n`;
-  code += `await runtime.fire("BACKDROP_SWITCHES_TO:" + ${backdropCode})\n`;
+  code += `await runtime.backdropswitchesto(${backdropCode}, waiting=True)\n`;
   return code;
 };
