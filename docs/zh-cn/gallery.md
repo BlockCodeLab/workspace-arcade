@@ -8,3 +8,8 @@
 - aid=1955592741&bvid=BV1Wy41187ej&cid=1574824003&p=1
 
 _在仿真器上的演示效果_
+
+- Bilibili video
+- aid=112733479504718&bvid=BV1ZFheefE5c&cid=500001605835960&p=1
+
+_隐藏彩蛋——NES模拟器_
