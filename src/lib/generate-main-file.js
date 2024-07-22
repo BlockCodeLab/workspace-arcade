@@ -15,7 +15,7 @@ export default function (stage, sprites) {
           sprites
             .toSorted((a, b) => a.zIndex - b.zIndex)
             .map(({ id }) => `import ${id.includes('sprite') ? id : `sprite${id}`}`),
-          'scratch_start(stage)',
+          'def start():\n  scratch_start(stage)',
         )
         .join('\n'),
     },

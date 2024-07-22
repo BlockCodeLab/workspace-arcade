@@ -14,7 +14,7 @@ const Editor = codeTab.Content;
 export default function BlocksEditor() {
   const { getText, maybeLocaleText } = useLocale();
   const { selectTab } = useLayout();
-  const { assetList, fileList, selectedIndex, modifyFile, addAsset } = useEditor();
+  const { name, assetList, fileList, selectedIndex, modifyFile, addAsset } = useEditor();
   const isStage = selectedIndex === 0;
 
   const messages = {
@@ -121,38 +121,44 @@ export default function BlocksEditor() {
   };
 
   const listAssets = (assets) => {
-    const res = [];
+    const res = {
+      imports: [],
+      modules: [],
+    };
     for (const assetId of assets) {
       const asset = assetList.find((asset) => asset.id === assetId);
       if (asset) {
-        res.push({
-          id: assetId,
-          name: maybeLocaleText(asset.name),
-          image: [assetId, asset.width, asset.height, asset.centerX, asset.centerY],
-        });
+        const moduleName = `image${asset.id}`;
+        res.imports.push(`import ${moduleName}`);
+        res.modules.push(moduleName);
       }
     }
-    return JSON.stringify(res);
+    return res;
   };
 
+  const targetAssets = listAssets(target.assets);
   pythonGenerator.additionalDefinitions_ = isStage
-    ? [['create_stage', `stage = target = Stage(runtime, ${listAssets(stage.assets)}, ${stage.frame})`]]
+    ? [
+      ['import_backdrops', targetAssets.imports.join('\n')],
+      ['create_stage', `stage = target = Stage(runtime, "${name}", (${targetAssets.modules},), ${stage.frame})`],
+    ]
     : [
-        ['import_stage', 'from stage import stage'],
-        [
-          'create_sprite',
-          `target = Sprite(runtime, stage, "${target.id}", "${maybeLocaleText(target.name)}", ${[
-            listAssets(target.assets),
-            target.frame,
-            Math.round(target.x),
-            Math.round(target.y),
-            Math.round(target.size),
-            Math.round(target.direction),
-            target.rotationStyle,
-            target.hidden ? 'True' : 'False',
-          ].join(', ')})`,
-        ],
-      ];
+      ['import_stage', 'from stage import stage'],
+      ['import_costumes', targetAssets.imports.join('\n')],
+      [
+        'create_sprite',
+        `target = Sprite(runtime, stage, "${target.id}", "${maybeLocaleText(target.name)}", ${[
+          `(${targetAssets.modules.join(',')},)`,
+          target.frame,
+          Math.round(target.x),
+          Math.round(target.y),
+          Math.round(target.size),
+          Math.round(target.direction),
+          target.rotationStyle,
+          target.hidden ? 'True' : 'False',
+        ].join(', ')})`,
+      ],
+    ];
 
   return (
     <>

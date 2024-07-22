@@ -12,6 +12,7 @@ import PaintText from './components/paint-text/paint-text';
 import BackdropsLibrary from './components/libraries/backdrops-library';
 import CostumesLibrary from './components/libraries/costumes-library';
 import SoundsLibrary from './components/libraries/sounds-library';
+import WifiMenuItem from './components/wifi-menu-item/wifi-menu-item';
 
 /* assets */
 import defaultProject from './lib/default-project';
@@ -64,8 +65,11 @@ export default function ArcadeBlocksWorkspace({ addLocaleData, createLayout, ope
     return { thumb: canvas.toDataURL() };
   };
 
-  const downloadProjectToDevice = async (fileList, assetList) => {
-    return [].concat(generateMainFile(fileList[0], fileList.slice(1)), await generateAssets(assetList));
+  const downloadProjectToDevice = (name, fileList, assetList) => {
+    const assets = generateAssets(assetList);
+    const stage = fileList[0];
+    stage.content = stage.content.replace(/Stage\(runtime, "[^"]*",/g, `Stage(runtime, "${name}",`);
+    return [].concat(generateMainFile(stage, fileList.slice(1)), ...assets);
   };
 
   const deviceName = (
@@ -92,6 +96,7 @@ export default function ArcadeBlocksWorkspace({ addLocaleData, createLayout, ope
     return (
       <DeviceMenu itemClassName={itemClassName}>
         <MenuSection>
+          <WifiMenuItem className={itemClassName} />
           <MenuItem
             className={itemClassName}
             label={
@@ -100,7 +105,7 @@ export default function ArcadeBlocksWorkspace({ addLocaleData, createLayout, ope
                 defaultMessage="Arcade manual"
               />
             }
-            onClick={() => window.open('https://lab.blockcode.fun/#/2024/0501/')}
+            onClick={() => window.open('https://arcade.blockcode.fun/')}
           />
         </MenuSection>
       </DeviceMenu>
@@ -109,6 +114,8 @@ export default function ArcadeBlocksWorkspace({ addLocaleData, createLayout, ope
 
   createLayout({
     mainMenu,
+
+    tutorials: false,
 
     tabs: [
       {
@@ -140,8 +147,6 @@ export default function ArcadeBlocksWorkspace({ addLocaleData, createLayout, ope
     ],
 
     pane: false,
-
-    tutorials: true,
 
     canEditProjectName: true,
   });

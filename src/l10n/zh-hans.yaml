@@ -10,6 +10,13 @@ arcade.pixelPaint.backdrops: 背景
 arcade.waveSurfer.sounds: 声音
 
 arcade.menu.device: 游戏机
+arcade.menu.device.wifi: 游戏机 Wi-Fi 网络配置
+arcade.menu.device.wifiNamePassword: Wi-Fi 名称和密码
+arcade.menu.device.wifiName: Wi-Fi 名称
+arcade.menu.device.wifiPassword: Wi-Fi 密码
+arcade.menu.device.wifiNote: 目前显示的 Wi-Fi 信息并不代表设备中的配置，确认后在下次下载程序时才会更新到设备中。
+arcade.menu.device.wifiOk: Wi-Fi 配置已储存。
+arcade.menu.device.wifiCancel: 取消 Wi-Fi 配置。
 arcade.menu.device.manual: 游戏机使用说明
 
 arcade.deletePrompt.title: 删除 {name}
@@ -108,3 +115,5 @@ arcade.blocks.musicMenu.jumpUp: 跳起来
 arcade.blocks.musicMenu.jumpDown: 跳下去
 arcade.blocks.musicMenu.powerUp: 打开电源
 arcade.blocks.musicMenu.powerDown: 关闭电源
+
+arcade.tutorials.gettingStarted: 入门
