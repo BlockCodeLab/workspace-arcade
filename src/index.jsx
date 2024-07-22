@@ -14,8 +14,8 @@ export default {
       description: 'Arcade game edit and play.',
     },
     'zh-Hans': {
-      name: 'Scratch 游戏机',
-      description: '在游戏机上玩自制小游戏。',
+      name: 'Scratch 编程学习机',
+      description: '在学习机上学习游戏编程。',
     },
   },
 };
