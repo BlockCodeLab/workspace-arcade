@@ -3,6 +3,7 @@
 }
 
 .stage {
+  z-index: 10;
   width: calc(320px * 1.5 + 2px);
   height: calc(240px * 1.5 + 2px);
   border: 1px solid var(--ui-black-transparent);

@@ -1,7 +1,7 @@
-import { useState } from 'preact/hooks';
 import { classNames } from '@blockcode/ui';
 import ArcadePlayer from '../arcade-player/arcade-player';
 import Toolbar from './toolbar';
+import Gamepad from './gamepad';
 import styles from './stage.module.css';
 
 export default function Stage({ playing, size, onSizeToggle, onPlay }) {
@@ -25,6 +25,8 @@ export default function Stage({ playing, size, onSizeToggle, onPlay }) {
           onRequestStop={handleStop}
         />
       </div>
+
+      <Gamepad />
     </div>
   );
 }
