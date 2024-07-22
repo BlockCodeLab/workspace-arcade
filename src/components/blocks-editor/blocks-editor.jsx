@@ -14,8 +14,8 @@ const Editor = codeTab.Content;
 export default function BlocksEditor() {
   const { getText, maybeLocaleText } = useLocale();
   const { selectTab } = useLayout();
-  const { name, assetList, fileList, selectedIndex, modifyFile, addAsset } = useEditor();
-  const isStage = selectedIndex === 0;
+  const { name, fileList, assetList, selectedFileId, modifyFile, addAsset } = useEditor();
+  const isStage = selectedFileId === fileList[0].id;
 
   const messages = {
     WIFI_ISCONNECTED: getText('arcade.blocks.isConnected', 'Wi-Fi is connected?'),
@@ -49,7 +49,7 @@ export default function BlocksEditor() {
     SOUND_MENU_POWER_DOWN: getText('arcade.blocks.musicMenu.powerDown', 'power down'),
   };
 
-  buildBlocks(assetList, fileList, selectedIndex, maybeLocaleText, () => {
+  buildBlocks(assetList, fileList, selectedFileId, maybeLocaleText, () => {
     addAsset({
       id: uid(),
       type: 'audio/wav',
@@ -63,7 +63,7 @@ export default function BlocksEditor() {
   });
 
   const stage = fileList[0];
-  const target = fileList[selectedIndex]; // stage or sprite
+  const target = fileList.find((file) => file.id === selectedFileId); // stage or sprite
 
   let thumb;
   if (target) {
@@ -94,7 +94,7 @@ export default function BlocksEditor() {
   setTimeout(() => {
     const workspace = ScratchBlocks.getMainWorkspace();
     if (workspace) {
-      if (selectedIndex > 0) {
+      if (!isStage) {
         ['glide', 'move', 'set'].forEach((prefix) => {
           updateToolboxBlockValue(`${prefix}x`, Math.round(target.x).toString());
           updateToolboxBlockValue(`${prefix}y`, Math.round(target.y).toString());
@@ -139,26 +139,26 @@ export default function BlocksEditor() {
   const targetAssets = listAssets(target.assets);
   pythonGenerator.additionalDefinitions_ = isStage
     ? [
-      ['import_backdrops', targetAssets.imports.join('\n')],
-      ['create_stage', `stage = target = Stage(runtime, "${name}", (${targetAssets.modules},), ${stage.frame})`],
-    ]
+        ['import_backdrops', targetAssets.imports.join('\n')],
+        ['create_stage', `stage = target = Stage(runtime, "${name}", (${targetAssets.modules},), ${stage.frame})`],
+      ]
     : [
-      ['import_stage', 'from stage import stage'],
-      ['import_costumes', targetAssets.imports.join('\n')],
-      [
-        'create_sprite',
-        `target = Sprite(runtime, stage, "${target.id}", "${maybeLocaleText(target.name)}", ${[
-          `(${targetAssets.modules.join(',')},)`,
-          target.frame,
-          Math.round(target.x),
-          Math.round(target.y),
-          Math.round(target.size),
-          Math.round(target.direction),
-          target.rotationStyle,
-          target.hidden ? 'True' : 'False',
-        ].join(', ')})`,
-      ],
-    ];
+        ['import_stage', 'from stage import stage'],
+        ['import_costumes', targetAssets.imports.join('\n')],
+        [
+          'create_sprite',
+          `target = Sprite(runtime, stage, "${target.id}", "${maybeLocaleText(target.name)}", ${[
+            `(${targetAssets.modules.join(',')},)`,
+            target.frame,
+            Math.round(target.x),
+            Math.round(target.y),
+            Math.round(target.size),
+            Math.round(target.direction),
+            target.rotationStyle,
+            target.hidden ? 'True' : 'False',
+          ].join(', ')})`,
+        ],
+      ];
 
   return (
     <>

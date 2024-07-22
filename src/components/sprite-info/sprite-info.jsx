@@ -13,21 +13,21 @@ import yIcon from './icon-y.svg';
 
 export default function SpriteInfo({ playing, stageSize }) {
   const { getText, maybeLocaleText } = useLocale();
-  const { fileList, selectedIndex, modifyFile } = useEditor();
+  const { fileList, selectedFileId, modifyFile } = useEditor();
 
-  const disabled = playing || selectedIndex < 1;
+  const isStage = selectedFileId === fileList[0].id;
+  const disabled = playing || isStage;
 
-  const sprite =
-    selectedIndex < 1
-      ? {
-          name: '',
-          x: '',
-          y: '',
-          size: '',
-          direction: '',
-          rotationStyle: RotationStyle.ALL_AROUND,
-        }
-      : fileList[selectedIndex];
+  const sprite = isStage
+    ? {
+        name: '',
+        x: '',
+        y: '',
+        size: '',
+        direction: '',
+        rotationStyle: RotationStyle.ALL_AROUND,
+      }
+    : fileList.find((file) => file.id === selectedFileId);
 
   const handleChangeInfo = (key, value) => {
     if (key === 'name') {

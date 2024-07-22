@@ -19,7 +19,7 @@ export default function SpriteSelector({ playing, stageSize, onStop }) {
   const [spritesLibrary, setSpritesLibrary] = useState(false);
   const { getText } = useLocale();
   const { selectTab, createAlert, removeAlert, createPrompt } = useLayout();
-  const { fileList, assetList, selectedIndex, addFile, openFile, deleteFile, addAsset, deleteAsset } = useEditor();
+  const { fileList, assetList, selectedFileId, addFile, openFile, deleteFile, addAsset, deleteAsset } = useEditor();
 
   const handleShowLibrary = () => {
     onStop();
@@ -164,14 +164,14 @@ export default function SpriteSelector({ playing, stageSize, onStop }) {
   };
 
   const handleDelete = (index) => {
-    const { name, assets } = fileList[index];
+    const { id, name, assets } = fileList[index];
     createPrompt({
       title: getText('arcade.deletePrompt.title', 'Delete {name}', { name }),
       label: getText('arcade.deletePrompt.label', 'Do you want to delete the sprite?'),
       onSubmit: () => {
         onStop();
         deleteAsset(assets);
-        deleteFile(index);
+        deleteFile(id);
       },
     });
   };
@@ -225,8 +225,8 @@ export default function SpriteSelector({ playing, stageSize, onStop }) {
                   ],
                 },
           )}
-          selectedIndex={selectedIndex}
-          onSelect={openFile}
+          selectedIndex={fileList.findIndex((file) => file.id === selectedFileId)}
+          onSelect={(index) => openFile(fileList[index].id)}
           onDelete={handleDelete}
         />
 

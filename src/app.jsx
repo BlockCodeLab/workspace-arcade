@@ -35,12 +35,13 @@ export default function ArcadeBlocksWorkspace({ addLocaleData, createLayout, ope
   });
 
   const createDefaultProject = (project) => {
+    project = project ?? defaultProject;
     openProject(
       Object.assign(
         {
-          selectedIndex: 1,
+          selectedFileId: project.fileList.length > 1 ? project.fileList[1].id : project.fileList[0].id,
         },
-        project || defaultProject,
+        project,
       ),
     );
   };

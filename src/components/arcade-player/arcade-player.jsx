@@ -11,7 +11,7 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
   const [canvas, setCanvas] = useState(null);
   const [currentRuntime, setCurrentRuntime] = useState(false);
   const { language, maybeLocaleText } = useLocale();
-  const { editor, fileList, assetList, selectedIndex, openFile, modifyFile } = useEditor();
+  const { editor, fileList, assetList, selectedFileId, openFile, modifyFile } = useEditor();
 
   const zoomRatio = stageSize === 'small' ? 1 : 1.5;
   const viewSize = new paperCore.Size(Runtime.VIEW_WIDTH * zoomRatio, Runtime.VIEW_HEIGHT * zoomRatio);
@@ -41,7 +41,7 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
     );
   };
 
-  const setMouseUpHandler = (raster, index) => async (e) => {
+  const setMouseUpHandler = (raster, id) => async (e) => {
     if (!raster.dragging) return;
     clearTimeout(raster.dragging);
     delete raster.dragging;
@@ -51,8 +51,8 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
     raster.util.goto(raster.position.x - paperCore.view.center.x, paperCore.view.center.y - raster.position.y);
     updateTargetFromRaster(raster);
 
-    if (index !== selectedIndex) {
-      openFile(index);
+    if (id !== selectedFileId) {
+      openFile(id);
     }
   };
 
@@ -133,8 +133,8 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
         // edit
         fileList
           .toSorted((a, b) => a.zIndex - b.zIndex)
-          .forEach(async (file, index) => {
-            const isStage = index === 0;
+          .forEach(async (file, i) => {
+            const isStage = i === 0;
             const layer = isStage ? stageLayer : spriteLayer;
             const assets = assetList.filter((asset) => file.assets.includes(asset.id));
 
@@ -153,7 +153,7 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
             if (isStage) {
               raster.util.backdrop = file.frame + 1;
             } else {
-              raster.onMouseUp = setMouseUpHandler(raster, index);
+              raster.onMouseUp = setMouseUpHandler(raster, file.id);
               raster.util.costume = file.frame + 1;
               raster.util.x = file.x;
               raster.util.y = file.y;

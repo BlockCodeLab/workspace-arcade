@@ -2,8 +2,8 @@ import { useEditor } from '@blockcode/core';
 import { Text } from '@blockcode/ui';
 
 export default function PaintText() {
-  const { selectedIndex } = useEditor();
-  if (selectedIndex === -1) {
+  const { fileList, selectedFileId } = useEditor();
+  if (selectedFileId === null) {
     return (
       <Text
         id="arcade.pixelPaint.default"
@@ -12,7 +12,7 @@ export default function PaintText() {
     );
   }
 
-  if (selectedIndex === 0) {
+  if (selectedFileId === fileList[0].id) {
     return (
       <Text
         id="arcade.pixelPaint.backdrops"

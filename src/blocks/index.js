@@ -5,11 +5,11 @@ import './sensing';
 import './sound';
 import './wifi';
 
-export default function (assetList, fileList, selectedIndex, maybeLocaleText, recordSound) {
+export default function (assetList, fileList, selectedFileId, maybeLocaleText, recordSound) {
   const stage = fileList[0];
-  const sprite = fileList[selectedIndex];
-  const otherSprites = fileList.filter((_, i) => i > 0 && i !== selectedIndex);
-  const isStage = selectedIndex === 0;
+  const sprite = fileList.find((file) => file.id === selectedFileId);
+  const otherSprites = fileList.filter((file, i) => i > 0 && file.id !== selectedFileId);
+  const isStage = stage === sprite;
 
   const otherSpritesMenu = otherSprites.map((sprite) => [maybeLocaleText(sprite.name), sprite.id]);
 

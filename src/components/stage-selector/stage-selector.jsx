@@ -20,7 +20,7 @@ export default function StageSelector({ onStop }) {
   const [backdropsLibrary, setBackdropsLibrary] = useState(false);
   const { getText } = useLocale();
   const { selectTab, createAlert, removeAlert } = useLayout();
-  const { fileList, assetList, selectedIndex, openFile, addAsset, modifyFile } = useEditor();
+  const { fileList, assetList, selectedFileId, openFile, addAsset, modifyFile } = useEditor();
 
   let backdropIdList, thumb, count;
   const stage = fileList[0];
@@ -61,7 +61,7 @@ export default function StageSelector({ onStop }) {
       assets: backdropIdList,
       frame: backdropIdList.length - 1,
     });
-    openFile(0);
+    openFile(stage.id);
   };
 
   const handleUploadFile = () => {
@@ -99,13 +99,13 @@ export default function StageSelector({ onStop }) {
         assets: backdropIdList,
         frame: backdropIdList.length - 1,
       });
-      openFile(0);
+      openFile(stage.id);
     });
   };
 
   const handlePaintImage = () => {
     onStop();
-    openFile(0);
+    openFile(stage.id);
 
     const imageId = uid();
     addAsset({
@@ -134,9 +134,9 @@ export default function StageSelector({ onStop }) {
     <>
       <div
         className={classNames(styles.stageSelector, {
-          [styles.isSelected]: selectedIndex === 0,
+          [styles.isSelected]: selectedFileId === stage.id,
         })}
-        onClick={() => openFile(0)}
+        onClick={() => openFile(stage.id)}
       >
         <div className={styles.header}>
           <div className={styles.headerTitle}>
