@@ -57,8 +57,9 @@
 }
 
 .joystick,
-.joystick-x,
-.joystick-y {
+.joystick-y,
+.joystick-x-left,
+.joystick-x-right {
   top: calc(2 * var(--space) + 2.3rem);
   left: calc(3 * var(--space) + 2.5rem);
   position: absolute;
@@ -70,18 +71,29 @@
   height: 2.5rem;
 }
 
-.joystick-x,
 .joystick-y {
+  width: 30px;
+  height: 80px;
   border-radius: var(--space);
   background: var(--ui-black-transparent);
 }
 
-.joystick-x {
-  width: 80px;
+.joystick-x-left,
+.joystick-x-right {
+  width: 25px;
   height: 30px;
+  border-radius: var(--space);
+  background: var(--ui-black-transparent);
 }
 
-.joystick-y {
-  width: 30px;
-  height: 80px;
+.joystick-x-left {
+  transform: translate(-40px, -50%);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.joystick-x-right {
+  transform: translate(15px, -50%);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }

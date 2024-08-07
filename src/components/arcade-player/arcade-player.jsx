@@ -7,7 +7,7 @@ import Runtime from './runtime';
 import generate from './generate';
 import createUtil from './target-util';
 
-export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
+export default function ArcadePlayer({ stageSize, playing, onReady, onRequestStop }) {
   const [canvas, setCanvas] = useState(null);
   const [currentRuntime, setCurrentRuntime] = useState(false);
   const { language, maybeLocaleText } = useLocale();
@@ -97,6 +97,7 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
           workspace.addChangeListener(onRequestStop);
         }
         setCurrentRuntime(runtime);
+        onReady(runtime);
       }
     } else {
       if (currentRuntime) {
@@ -112,6 +113,7 @@ export default function ArcadePlayer({ stageSize, playing, onRequestStop }) {
           dialogLayer.removeChildren();
           setCurrentRuntime(false);
         });
+        onReady(null);
       } else {
         spriteLayer.onMouseDown = (e) => {
           for (const hitTarget of spriteLayer.hitTestAll(e.point)) {
