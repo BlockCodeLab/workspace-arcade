@@ -18,9 +18,9 @@
   },
   "devDependencies": {
     "bun-types": "latest",
-    "bun-loader-css": "link:bun-loader-css",
-    "bun-loader-yaml": "link:bun-loader-yaml",
-    "bun-plugin-copy": "link:bun-plugin-copy"
+    "bun-loader-css": "github:kankungyip/bun-loader-css",
+    "bun-loader-yaml": "github:kankungyip/bun-loader-yaml",
+    "bun-plugin-copy": "github:kankungyip/bun-plugin-copy"
   },
   "dependencies": {
     "preact": "^10.18.1",
